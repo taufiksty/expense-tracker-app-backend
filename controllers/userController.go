@@ -49,9 +49,10 @@ func Register(c *gin.Context) {
 	}
 
 	utils.RespondJSON(c, http.StatusCreated, "Registration successfully", map[string]interface{}{
-		"id":    user.ID,
-		"name":  user.Name,
-		"email": user.Email,
+		"id":         user.ID,
+		"name":       user.Name,
+		"email":      user.Email,
+		"created_at": user.CreatedAt,
 	})
 }
 
@@ -83,7 +84,12 @@ func Login(c *gin.Context) {
 	}
 
 	utils.RespondJSON(c, http.StatusOK, "Login successfully", map[string]interface{}{
-		"user":  user,
+		"user": map[string]interface{}{
+			"id":         user.ID,
+			"email":      user.Email,
+			"name":       user.Name,
+			"updated_at": user.UpdatedAt,
+		},
 		"token": token,
 	})
 }

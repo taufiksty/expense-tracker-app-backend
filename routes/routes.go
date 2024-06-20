@@ -26,6 +26,12 @@ func SetupRoutes(r *gin.Engine) {
 		authorized.Use(middlewares.AuthMiddleware())
 		{
 			authorized.DELETE("/logout", controllers.Logout)
+
+			authorized.POST("/expenses", controllers.CreateExpense)
+			authorized.GET("/expenses", controllers.GetExpenses)
+			authorized.GET("/expenses/:id", controllers.GetExpenseById)
+			authorized.PUT("/expenses/:id", controllers.UpdateExpenseById)
+			authorized.DELETE("/expenses/:id", controllers.DeleteExpenseById)
 		}
 	}
 }
