@@ -32,6 +32,6 @@ func ConnectDatabase() {
 		log.Fatal("Failed to connect database: ", err)
 	}
 
-	database.AutoMigrate(&models.User{}, &models.Expense{})
+	database.AutoMigrate(&models.User{}, &models.Expense{}, &models.BlacklistToken{})
 	DB = database
 }

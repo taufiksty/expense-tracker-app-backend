@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/taufiksty/expense-tracker-app-backend/auth"
@@ -95,5 +96,19 @@ func Login(c *gin.Context) {
 }
 
 func Logout(c *gin.Context) {
+	authHeader := c.GetHeader("Authorization")
+	if authHeader == "" {
+		utils.RespondError(c, http.StatusUnauthorized, "Authorization header is required")
+		return
+	}
+
+	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
+
+	blacklistToken := models.BlacklistToken{Token: tokenString}
+	if err := config.DB.Create(&blacklistToken).Error; err != nil {
+		utils.RespondError(c, http.StatusInternalServerError, "Could not blacklist token. Your logout was failed")
+		return
+	}
+
 	utils.RespondJSON(c, http.StatusOK, "Logout successfully", nil)
 }

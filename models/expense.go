@@ -9,6 +9,6 @@ type Expense struct {
 	UserID      uint      `json:"user_id" gorm:"not null"`
 	Date        time.Time `json:"date" gorm:"not null;default:CURRENT_TIMESTAMP"`
 
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoCreateTime;autoUpdateTime"`
+	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt time.Time `json:"updated_at" gorm:"autoCreateTime;autoUpdateTime"`
 }
